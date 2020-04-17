@@ -1,0 +1,241 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Gun.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/cliffGrey_top.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/tree_pineSmall_square1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/campfire_large.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/tent_detailedOpen.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/treeStump_side.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Tank.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/Tank.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/EnemyBullets.gd" type="Script" id=11]
+
+[sub_resource type="ConvexPolygonShape" id=1]
+points = PoolVector3Array( -1.00542, 0.00546448, -1.00546, -1.00542, 0.00546448, 1.00546, 1.00546, 0.00546448, -1.00546, 1.00546, 0.00546448, 1.00546 )
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 4, 4 )
+
+[sub_resource type="CapsuleShape" id=3]
+radius = 0.5
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.4, 0.1, 0.4 )
+
+[sub_resource type="BoxShape" id=5]
+
+[node name="Game" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="Ground" type="MeshInstance" parent="Ground"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Player" type="KinematicBody" parent="."]
+script = ExtResource( 1 )
+
+[node name="Body" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.1, 0 )
+shape = SubResource( 3 )
+
+[node name="Feet" type="CollisionShape" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0 )
+shape = SubResource( 4 )
+
+[node name="Pivot" type="Spatial" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0 )
+
+[node name="Camera" type="Camera" parent="Player/Pivot"]
+
+[node name="Gun" parent="Player/Pivot" instance=ExtResource( 2 )]
+transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.2, -0.3, -0.25 )
+
+[node name="Muzzle" type="Position3D" parent="Player/Pivot"]
+transform = Transform( -0.5, 0, -1.62921e-07, 0, 0.5, 0, 1.62921e-07, 0, -0.5, 0.202646, -0.13665, -0.805672 )
+
+[node name="Bullets" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42082, -0.891159 )
+
+[node name="HUD" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+margin_right = 77.0
+margin_bottom = 23.0
+color = Color( 0, 0, 0, 0.25098 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="HUD"]
+margin_right = 177.0
+margin_bottom = 67.0
+text = "Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cliffs" type="Spatial" parent="."]
+
+[node name="cliffGrey_top" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 10, 0, 0, -60 )
+
+[node name="cliffGrey_top4" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 10, -30, 0, -60 )
+
+[node name="cliffGrey_top2" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 10, 30, 0, -60 )
+
+[node name="cliffGrey_top3" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 30, 0, 0, 0, 30, 0, 0, 0, 10, 60, 0, -60 )
+
+[node name="cliffGrey_top5" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 3.57746e-07, 0, -10, 0, 30, 0, 30, 0, 1.19249e-07, 60, 0, 30 )
+
+[node name="cliffGrey_top7" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 3.57746e-07, 0, -10, 0, 30, 0, 30, 0, 1.19249e-07, 60, 0, 0 )
+
+[node name="cliffGrey_top8" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 3.57746e-07, 0, -10, 0, 30, 0, 30, 0, 1.19249e-07, 60, 0, -30 )
+
+[node name="cliffGrey_top6" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( 3.57746e-07, 0, -10, 0, 30, 0, 30, 0, 1.19249e-07, 60, 0, 60 )
+
+[node name="cliffGrey_top9" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -30, 0, 3.25841e-06, 0, 30, 0, -9.77524e-06, 0, -10, 30, 0, 60 )
+
+[node name="cliffGrey_top10" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -30, 0, 3.25841e-06, 0, 30, 0, -9.77524e-06, 0, -10, 0, 0, 60 )
+
+[node name="cliffGrey_top11" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -30, 0, 3.25841e-06, 0, 30, 0, -9.77524e-06, 0, -10, -30, 0, 60 )
+
+[node name="cliffGrey_top12" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -30, 0, 3.25841e-06, 0, 30, 0, -9.77524e-06, 0, -10, -60, 0, 60 )
+
+[node name="cliffGrey_top13" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -4.88762e-06, 0, 10, 0, 30, 0, -30, 0, -1.62921e-06, -60, 0, 30 )
+
+[node name="cliffGrey_top14" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -4.88762e-06, 0, 10, 0, 30, 0, -30, 0, -1.62921e-06, -60, 0, 0 )
+
+[node name="cliffGrey_top15" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -4.88762e-06, 0, 10, 0, 30, 0, -30, 0, -1.62921e-06, -60, 0, -30 )
+
+[node name="cliffGrey_top16" parent="Cliffs" instance=ExtResource( 4 )]
+transform = Transform( -4.88762e-06, 0, 10, 0, 30, 0, -30, 0, -1.62921e-06, -60, 0, -60 )
+
+[node name="Decor" type="Spatial" parent="."]
+
+[node name="tree_pineSmall_square1" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 10 )
+
+[node name="tree_pineSmall_square6" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.9012, 0, 10 )
+
+[node name="tree_pineSmall_square7" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.2718, 0, -19.5436 )
+
+[node name="tree_pineSmall_square10" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.97883, 0, -9.54893 )
+
+[node name="tree_pineSmall_square3" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 23.4622, 0, 18.2346 )
+
+[node name="tree_pineSmall_square9" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, -25.264, 0, 2.41723 )
+
+[node name="tree_pineSmall_square2" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0.195557, 0, 20.1967 )
+
+[node name="tree_pineSmall_square11" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -21.407, 0, 28.4201 )
+
+[node name="tree_pineSmall_square8" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -7.96663, 0, -23.4971 )
+
+[node name="tree_pineSmall_square4" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 24.4124, 0, -5.40463 )
+
+[node name="tree_pineSmall_square5" parent="Decor" instance=ExtResource( 5 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 17.758, 0, 27.1027 )
+
+[node name="campfire_large" parent="Decor" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3 )
+
+[node name="tent_detailedOpen" parent="Decor" instance=ExtResource( 7 )]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -8, 0, -4 )
+
+[node name="Items" type="Spatial" parent="."]
+
+[node name="Stump" parent="Items" instance=ExtResource( 8 )]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -9.57101, 0, 3.66972 )
+
+[node name="Stump2" parent="Items" instance=ExtResource( 8 )]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -39.3817, 0, 21.4096 )
+
+[node name="Stump3" parent="Items" instance=ExtResource( 8 )]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 35.7494, 0, -15.9136 )
+
+[node name="Enemies" type="Spatial" parent="."]
+
+[node name="Tank" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -30 )
+script = ExtResource( 10 )
+
+[node name="RhysBall" parent="Tank" instance=ExtResource( 9 )]
+
+[node name="CollisionShape" type="CollisionShape" parent="Tank"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06152, 0 )
+shape = SubResource( 5 )
+
+[node name="Scanner" type="RayCast" parent="Tank"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1.15747, 0 )
+enabled = true
+cast_to = Vector3( 30, 0, 0 )
+
+[node name="Timer" type="Timer" parent="Tank"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Position3D" type="Position3D" parent="Tank"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2109, -1.77142 )
+
+[node name="Tank2" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 36.5754 )
+script = ExtResource( 10 )
+
+[node name="RhysBall" parent="Tank2" instance=ExtResource( 9 )]
+
+[node name="CollisionShape" type="CollisionShape" parent="Tank2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06152, 0 )
+shape = SubResource( 5 )
+
+[node name="Scanner" type="RayCast" parent="Tank2"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 1.15747, 0 )
+enabled = true
+cast_to = Vector3( 30, 0, 0 )
+
+[node name="Timer" type="Timer" parent="Tank2"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Position3D" type="Position3D" parent="Tank2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2109, -1.77142 )
+
+[node name="EnemyBullets" type="Spatial" parent="."]
+script = ExtResource( 11 )
+
+[node name="Timer" type="Timer" parent="EnemyBullets"]
+one_shot = true
+[connection signal="timeout" from="Tank/Timer" to="Tank" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Tank2/Timer" to="Tank2" method="_on_Timer_timeout"]
+[connection signal="timeout" from="EnemyBullets/Timer" to="EnemyBullets" method="_on_Timer_timeout"]
